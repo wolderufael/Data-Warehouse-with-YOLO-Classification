@@ -73,7 +73,7 @@ class Scrapper:
             # Load channels from JSON file
             channels, comments = self.load_channels_from_json('data/channels.json')
             
-            num_messages_to_scrape = 1000  # Specify the number of messages to scrape
+            num_messages_to_scrape = 10  # Specify the number of messages to scrape
 
             for channel in channels:
                 # Create a CSV file named after the channel
@@ -88,10 +88,13 @@ class Scrapper:
             # Log commented channels if needed
             if comments:
                 logging.info(f"Commented channels: {', '.join(comments)}")
+                
+            return csv_filename
 
         except Exception as e:
             logging.error(f"Error in main function: {e}")
 
-# if __name__ == "__main__":
-#     import asyncio
-#     asyncio.run(main())
+if __name__ == "__main__":
+    import asyncio
+    scraper=Scrapper()
+    asyncio.run(scraper.main())

@@ -1,3 +1,8 @@
 data
 .venv
 logs
+.env
+dags/data
+dags/.env
+script/scraping_session.session
+script/scraping.log
