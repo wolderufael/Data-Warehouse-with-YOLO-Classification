@@ -1,37 +1,41 @@
 from airflow import DAG
 from datetime import timedelta, datetime
 import json
+import pandas as pd
 from airflow.operators.python import PythonOperator
 # from scraper import run_scraper
-import subprocess
+# import subprocess
+import scraper
+from data_cleaner import Cleaner
+
+def run_scrap():
+    # scraper.scraper()
+    print("hello")
 
 
-# Function to run the scraper script and push the file path to XCom
-def run_scraper(**kwargs):
-    result = subprocess.run(
-        ["python", "G:\\Programming\\10_Academy\\Week_12\\Medical Data Ware house with object detection\\script\\telegram_scraper.py"],
-        capture_output=True,
-        text=True,
-        check=True
-    )
-    file_path = result.stdout.strip()  # Extract the file path from the script output
-    print(f"Scraper output file path: {file_path}")
-    kwargs['ti'].xcom_push(key='scraper_output', value=file_path)  # Push to XCom
+def scrape_task(**kwargs):
+    # Run the scraping logic and return the result
+    df = scraper.scraper()  # Scrape the data
+    # Push the DataFrame to XCom for downstream tasks
+    kwargs['ti'].xcom_push(key='scraped_data', value=df.to_json())
 
-
-# Function to run the cleaner script with the file path from XCom
-def run_cleaner(**kwargs):
+def clean_task(**kwargs):
+    # Retrieve the scraped data from XCom
     ti = kwargs['ti']
-    file_path = ti.xcom_pull(key='scraper_output', task_ids='run_scraper')  # Pull file path from XCom
+    scraped_data_json = ti.xcom_pull(task_ids='scrape_task', key='scraped_data')
+    
+    # Convert JSON back to DataFrame
+    df = pd.read_json(scraped_data_json)
+    
+    # Perform the cleaning using the Cleaner class
+    cleaner = Cleaner()
+    cleaned_data = cleaner.data_cleaning(df)
+    
+    # You can return or save the cleaned data as needed
+    print(cleaned_data.head())  # For demonstration
 
-    if not file_path:
-        raise ValueError("File path not found in XCom.")
 
-    subprocess.run(
-        ["python", "G:\\Programming\\10_Academy\\Week_12\\Medical Data Ware house with object detection\\script\\data_cleaner.py", file_path],
-        check=True
-    )
-    print(f"Cleaner processed file: {file_path}")
+
 
 default_args = {
     'owner': 'airflow',
@@ -51,12 +55,12 @@ with DAG('etl_scraper',
     
         scraper_task = PythonOperator(
         task_id='run_scraper',
-        python_callable=run_scraper,
+        python_callable=scrape_task,
         provide_context=True,
     )
         cleaning_task = PythonOperator(
         task_id='run_cleaner',
-        python_callable=run_scraper,
+        python_callable=clean_task,
         provide_context=True,
     )
 

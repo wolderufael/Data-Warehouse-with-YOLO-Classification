@@ -1,11 +1,12 @@
 # /opt/airflow/dags/scraper.py
-import logging
+# import logging
 import csv
 import os
 import json
 from telethon import TelegramClient
 from dotenv import load_dotenv
 import asyncio
+import pandas as pd
 
 # # Set up logging
 # logging.basicConfig(
@@ -61,7 +62,7 @@ async def scrape_channel(client, channel_username, writer, media_dir, num_messag
         print(f"Error while scraping {channel_username}: {e}")
 
 # Function to run the scraper, which will be executed by the PythonOperator
-def run_scraper():
+def scraper():
     client = TelegramClient('scraping_session', api_id, api_hash)
     
     try:
@@ -83,6 +84,9 @@ def run_scraper():
                 
                 asyncio.run(scrape_channel(client, channel, writer, media_dir, num_messages_to_scrape))
                 # logging.info(f"Scraped data from {channel}.")
+                
+                df = pd.read_csv(csv_filename)
+                return df 
 
     except Exception as e:
         # logging.error(f"Error in main function: {e}")
