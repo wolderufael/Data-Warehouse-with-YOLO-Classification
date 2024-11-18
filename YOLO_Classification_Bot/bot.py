@@ -49,7 +49,6 @@ async def handle_photo(update: Update, context: ContextTypes.DEFAULT_TYPE) -> No
     
 # Add handlers
 app.add_handler(CommandHandler("start", start))
-app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, get_word_info))
 app.add_handler(MessageHandler(filters.PHOTO, handle_photo))  # Photo handler
 
 # # Run the webhook for the bot
