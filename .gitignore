@@ -6,5 +6,5 @@ dags/data
 dags/.env
 script/scraping_session.session
 script/scraping.log
-models
+# models
 YOLO_Classification_Bot/.env
