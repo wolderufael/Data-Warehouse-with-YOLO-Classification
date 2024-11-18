@@ -11,7 +11,7 @@ from ultralytics import YOLO
 
 # Load environment variables once
 load_dotenv('.env')
-telegram_bot_token = os.getenv('TOKEN3')
+telegram_bot_token = os.getenv('TOKEN1')
 
 # Initialize the Application
 app = Application.builder().token(telegram_bot_token).build()
@@ -37,8 +37,11 @@ async def handle_photo(update: Update, context: ContextTypes.DEFAULT_TYPE) -> No
     
     # Decode the image using OpenCV
     img = cv2.imdecode(image_np, cv2.IMREAD_COLOR)
-    # model=YOLO("../models/last.pt")
-    model=YOLO("../models/yolo11n-cls.pt")
+    # model=YOLO("../models/lastx_epoch_20.pt")
+    # model=YOLO("../models/lastn_epoch_30.pt")
+    # model=YOLO("../models/yolo11n-cls.pt")
+    # model=YOLO("../models/yolo11x-cls.pt")
+    model=YOLO("../models/last_n_e_50.pt")
 
     results=model(img)
     def get_category_name(results):
@@ -51,10 +54,10 @@ async def handle_photo(update: Update, context: ContextTypes.DEFAULT_TYPE) -> No
         category_name = names_mapping[top1_index]
         return category_name
 
-    # category=get_category_name(results)
+    category=get_category_name(results)
     
-    # await update.message.reply_text(f"Category: {category}")
-    await update.message.reply_text(f"Category: {results[0].names[results[0].probs.top1]}")
+    await update.message.reply_text(f"Category: {category}")
+    # await update.message.reply_text(f"Category: {results[0].names[results[0].probs.top1]}")
     
 # Add handlers
 app.add_handler(CommandHandler("start", start))
