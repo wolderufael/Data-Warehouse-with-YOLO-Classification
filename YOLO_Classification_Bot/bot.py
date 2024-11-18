@@ -63,7 +63,7 @@ app.run_webhook(
     listen="0.0.0.0",
     port=int(os.environ.get('PORT', 5001)),
     url_path=telegram_bot_token,
-    webhook_url=f'https://dictionary-bot-pbld.onrender.com/{telegram_bot_token}'
+    webhook_url=f'https://medical-data-warehouse-with-object.onrender.com/{telegram_bot_token}'
 )
 
 # # Start the bot
