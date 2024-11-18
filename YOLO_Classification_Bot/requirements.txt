@@ -6,3 +6,6 @@ universal_pathlib==0.2.5
 urllib3==2.2.3
 python-telegram-bot==21.7
 python-dotenv==1.0.1
+requests==2.32.3
+tornado==6.4.1
+itsdangerous==2.2.0
