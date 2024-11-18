@@ -1,0 +1,7 @@
+opencv-python==4.10.0.84
+ultralytics==8.3.32
+ultralytics-thop==2.0.11
+universal_pathlib==0.2.5
+urllib3==2.2.3
+python-telegram-bot==21.7
+python-dotenv==1.0.1

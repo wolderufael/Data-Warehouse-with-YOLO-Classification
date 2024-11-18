@@ -1,0 +1,7 @@
+path : '/content/drive/My Drive/Kifiya_AI_mastery_10_Academy/Week12/YOLOv8/data'
+train: images/train
+val: images/train
+
+names:
+  0: Pharmaceutical
+  1: Cosmotics
