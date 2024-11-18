@@ -11,7 +11,7 @@ from ultralytics import YOLO
 
 # Load environment variables once
 load_dotenv('.env')
-telegram_bot_token = os.getenv('TOKEN1')
+telegram_bot_token = os.getenv('TOKEN4')
 
 # Initialize the Application
 app = Application.builder().token(telegram_bot_token).build()
