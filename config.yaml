@@ -3,5 +3,8 @@ train: images/train
 val: images/train
 
 names:
-  0: Pharmaceutical
-  1: Cosmotics
+  0: Cosmetics
+  1: Nutritional Product
+  2: Pharmaceutical Product
+  3: Health Supplement
+

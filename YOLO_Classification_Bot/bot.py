@@ -26,9 +26,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
 async def handle_photo(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     # Download the photo
     photo_file = await update.message.photo[-1].get_file()
-    # photo_path = await photo_file.download_to_drive()
 
-    # # Load image with OpenCV
     # Download the image as a byte array
     photo_bytes = await photo_file.download_as_bytearray()
     
@@ -37,10 +35,7 @@ async def handle_photo(update: Update, context: ContextTypes.DEFAULT_TYPE) -> No
     
     # Decode the image using OpenCV
     img = cv2.imdecode(image_np, cv2.IMREAD_COLOR)
-    # model=YOLO("../models/lastx_epoch_20.pt")
-    # model=YOLO("../models/lastn_epoch_30.pt")
-    # model=YOLO("../models/yolo11n-cls.pt")
-    # model=YOLO("../models/yolo11x-cls.pt")
+
     model=YOLO("../models/last_n_e_50.pt")
 
     results=model(img)
@@ -57,7 +52,6 @@ async def handle_photo(update: Update, context: ContextTypes.DEFAULT_TYPE) -> No
     category=get_category_name(results)
     
     await update.message.reply_text(f"Category: {category}")
-    # await update.message.reply_text(f"Category: {results[0].names[results[0].probs.top1]}")
     
 # Add handlers
 app.add_handler(CommandHandler("start", start))
