@@ -31,7 +31,6 @@ class Classification:
             # Run object detection
             model=YOLO("models/last_n_e_50.pt")
 
-
             results=model(img_path)
             def get_category_name(results):
                 # Access the top1 index and names mapping

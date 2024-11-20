@@ -12,10 +12,15 @@ def read_root():
     return {"message": "Hello, FastAPI!"}
 
 # Create Item endpoint
+# @router.post("/items/", response_model=schemas.Item)
+# def create_item(item: schemas.ItemCreate, db: Session = Depends(get_db)):
+#     # Call the create_item function in CRUD to add the new item
+#     db_item = crud.create_item(db=db, item=item)
+#     return db_item
+
 @router.post("/items/", response_model=schemas.Item)
-def create_item(item: schemas.ItemCreate, db: Session = Depends(get_db)):
-    # Call the create_item function in CRUD to add the new item
-    db_item = crud.create_item(db=db, item=item)
+def create_item(image_name: str, product_category: str, db: Session = Depends(get_db)):
+    db_item = crud.create_item(db=db, item=schemas.ItemCreate(image_name=image_name, product_category=product_category))
     return db_item
 
 # Get items by product_category
