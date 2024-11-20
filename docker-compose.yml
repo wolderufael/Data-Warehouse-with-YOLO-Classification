@@ -1,5 +1,28 @@
 version: '3'
 services:
+  webserver:
+    image: medical-data-ware-house-with-object-detection_51fc55/airflow:latest
+    volumes:
+      - ./data:/mnt/data  # Mounts the local ./data directory to /mnt/data inside the container
+    environment:
+      - SESSION_NAME=/mnt/data/session_name.session  # Path inside the container
+    # ports:
+    #   - "8080:8080"  # Expose webserver port for access
+
+  scheduler:
+    image: medical-data-ware-house-with-object-detection_51fc55/airflow:latest
+    volumes:
+      - ./data:/mnt/data  # Mounts the local ./data directory to /mnt/data inside the container
+    environment:
+      - SESSION_NAME=/mnt/data/session_name.session  # Path inside the container
+
+  triggerer:
+    image: medical-data-ware-house-with-object-detection_51fc55/airflow:latest
+    volumes:
+      - ./data:/mnt/data  # Mounts the local ./data directory to /mnt/data inside the container
+    environment:
+      - SESSION_NAME=/mnt/data/session_name.session  # Path inside the container
+
   postgres:
     image: postgres:13
     container_name: postgres_db

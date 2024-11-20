@@ -31,8 +31,8 @@ def scrape_telegram_channel(channel_username: str):
     session_name = os.getenv('SESSION_NAME')
 
     # Initialize Telegram client
-    # client = TelegramClient('session_name', api_id, api_hash)
-    client = TelegramClient(session_name, api_id, api_hash)
+    client = TelegramClient('session_name', api_id, api_hash)
+    # client = TelegramClient(session_name, api_id, api_hash)
 
     async def fetch_posts():
         # Start the client session and handle authentication
